@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Form } from '@angular/forms';
+import { NgForm } from '@angular/forms';
+
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,11 +9,15 @@ import { Form } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
-  onSubmitForm(LoginForm: Form) {
-    console.log(LoginForm);
+  onSubmit(loginForm: NgForm) {
+    console.log('UserLogin = ', loginForm.value.email);
+    this.authService.login({
+      email: loginForm.value.email,
+      password: loginForm.value.password,
+    });
   }
 }
