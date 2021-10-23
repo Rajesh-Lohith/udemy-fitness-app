@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Exercise } from './exercise.model';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TrainingService {
@@ -9,9 +11,25 @@ export class TrainingService {
   private runningExercise: Exercise;
   exerciseChanged = new Subject<Exercise>();
   exercisesChanged = new Subject<Exercise[]>();
-  private pastExercises: Exercise[] = [];
+  pastExercisesChanged = new Subject<Exercise[]>();
+  AudioURLFirestore: any;
 
-  constructor(private db: AngularFirestore) {}
+  constructor(
+    private db: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {}
+
+  getAudioURLFirestore(): any {
+    console.log('getting ref');
+    const ref = this.storage.ref('fitnessApp/blob').getDownloadURL();
+    console.log(ref);
+    ref.subscribe((result) => {
+      console.log(result);
+      this.AudioURLFirestore = result;
+      console.log('AudioURL = ', this.AudioURLFirestore);
+      return result;
+    });
+  }
 
   fetchAvailableExercise() {
     this.db
@@ -28,10 +46,15 @@ export class TrainingService {
           };
         });
       })
-      .subscribe((exercises: Exercise[]) => {
-        this.availableExercises = exercises;
-        this.exercisesChanged.next([...this.availableExercises]);
-      });
+      .subscribe(
+        (exercises: Exercise[]) => {
+          this.availableExercises = exercises;
+          this.exercisesChanged.next([...this.availableExercises]);
+        },
+        (error) => {
+          // console.log(error);
+        }
+      );
   }
 
   startExercise(selectedId: string) {
@@ -47,7 +70,7 @@ export class TrainingService {
   }
 
   completeExercise() {
-    this.pastExercises.push({
+    this.storePastExercises({
       ...this.runningExercise,
       date: new Date(),
       state: 'completed',
@@ -57,7 +80,7 @@ export class TrainingService {
   }
 
   cancelExercise(progress: number) {
-    this.pastExercises.push({
+    this.storePastExercises({
       ...this.runningExercise,
       date: new Date(),
       duration: (this.runningExercise.duration * progress) / 100,
@@ -68,7 +91,22 @@ export class TrainingService {
     this.exerciseChanged.next(null);
   }
 
-  getPastExercises() {
-    return this.pastExercises.slice();
+  storePastExercises(exercise: Exercise) {
+    this.db.collection('pastExercises').add(exercise);
+  }
+
+  fetchPastExercises() {
+    console.log('Fetching past exercises ');
+    this.db
+      .collection('pastExercises')
+      .valueChanges()
+      .subscribe(
+        (pastExercises: Exercise[]) => {
+          this.pastExercisesChanged.next(pastExercises);
+        },
+        (error) => {
+          // console.log(error);
+        }
+      );
   }
 }

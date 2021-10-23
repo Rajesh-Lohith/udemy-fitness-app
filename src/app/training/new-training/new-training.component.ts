@@ -14,6 +14,8 @@ import 'rxjs/add/operator/map';
 export class NewTrainingComponent implements OnInit, OnDestroy {
   availableTrainings: Exercise[];
   exerciseSubscription: Subscription;
+  AUdioURLFirestore: any =
+    'https://firebasestorage.googleapis.com/v0/b/fitness-34d54.appspot.com/o/fitnessApp%2Fblob?alt=media&token=c26d5b5f-8bd2-487b-8e5e-5bc49f50c6ea';
 
   constructor(
     private trainingService: TrainingService,
@@ -28,6 +30,8 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
       (ex) => (this.availableTrainings = ex)
     );
     this.trainingService.fetchAvailableExercise();
+    // this.AUdioURLFirestore = this.trainingService.getAudioURLFirestore();
+    // console.log('AUdioURLFirestore', this.AUdioURLFirestore);
   }
 
   onAddNewTraining(exerciseForm: NgForm) {

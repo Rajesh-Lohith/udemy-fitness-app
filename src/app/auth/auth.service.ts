@@ -3,46 +3,71 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
 import { User } from './user.model';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { auth } from 'firebase';
 
 @Injectable()
 export class AuthService {
-  private user: User;
+  private isUserAuthenticated: boolean = false;
   authChange = new Subject<boolean>();
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private angularFireAuth: AngularFireAuth
+  ) {}
 
-  registerUser(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString(),
-    };
-    this.onSuccessfulLogin();
+  initAuthListener() {
+    this.angularFireAuth.authState.subscribe((user) => {
+      if (user) {
+        console.log('User ====== ', JSON.stringify(user));
+        this.isUserAuthenticated = true;
+        this.authChange.next(true);
+        this.router.navigate(['/training']);
+      } else {
+        this.isUserAuthenticated = false;
+        this.authChange.next(false);
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
-  onSuccessfulLogin() {
-    this.authChange.next(true);
-    this.router.navigate(['/training']);
+  registerUser(authData: AuthData) {
+    this.angularFireAuth.auth
+      .signInWithPopup(new auth.GoogleAuthProvider())
+      .then((result) => {
+        const idToken = this.angularFireAuth.auth.currentUser.getIdToken();
+        console.log(result);
+        console.log('idToken =', idToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // this.angularFireAuth.auth
+    //   .createUserWithEmailAndPassword(authData.email, authData.password)
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   login(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString(),
-    };
-    this.onSuccessfulLogin();
+    this.angularFireAuth.auth
+      .signInWithEmailAndPassword(authData.email, authData.password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   logout() {
-    this.user = null;
-    this.authChange.next(false);
-    this.router.navigate(['/login']);
-  }
-
-  getUser() {
-    return { ...this.user };
+    this.angularFireAuth.auth.signOut();
   }
 
   isAuthenticated() {
-    return this.user != null;
+    return this.isUserAuthenticated;
   }
 }
