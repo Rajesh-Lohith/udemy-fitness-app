@@ -9,7 +9,7 @@ export class TaxiCommunityService {
 
   getTaxiCommunityData() {
     return this.http.get(
-      'http://localhost:8081/taxiTrips/taxiTripsDataByCommunityArea'
+      'http://34.125.177.187:8081/taxiTrips/taxiTripsDataByCommunityArea'
     );
   }
 }

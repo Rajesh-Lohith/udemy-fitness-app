@@ -9,13 +9,13 @@ export class PositiveCovidService {
 
   getPositiveLabels() {
     return this.http.get(
-      'http://localhost:8081/covidTest/positiveCovidTestLabels'
+      'http://34.125.177.187:8081/covidTest/positiveCovidTestLabels'
     );
   }
 
   getPositiveData() {
     return this.http.get(
-      'http://localhost:8081/covidTest/positiveCovidTestData'
+      'http://34.125.177.187:8081/covidTest/positiveCovidTestData'
     );
   }
 }

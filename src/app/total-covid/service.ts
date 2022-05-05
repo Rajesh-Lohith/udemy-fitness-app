@@ -9,11 +9,13 @@ export class TotalCovidService {
 
   getTotalLabels() {
     return this.http.get(
-      'http://localhost:8081/covidTest/totalCovidTestLabels'
+      'http://34.125.177.187:8081/covidTest/totalCovidTestLabels'
     );
   }
 
   getTotalData() {
-    return this.http.get('http://localhost:8081/covidTest/totalCovidTestData');
+    return this.http.get(
+      'http://34.125.177.187:8081/covidTest/totalCovidTestData'
+    );
   }
 }

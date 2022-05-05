@@ -9,7 +9,7 @@ export class UnemploymentService {
 
   getUnemploymentData() {
     return this.http.get(
-      'http://localhost:8081/unemploymentRates/unemploymentRatesData'
+      'http://34.125.177.187:8081/unemploymentRates/unemploymentRatesData'
     );
   }
 }
