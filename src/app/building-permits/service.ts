@@ -9,13 +9,13 @@ export class BuildingPermitService {
 
   getBuildingPermitLabels() {
     return this.http.get(
-      'http://34.125.177.187:8081/buildingPermits/buildingPermitsLabels'
+      'http://localhost:8081/buildingPermits/buildingPermitsLabels'
     );
   }
 
   getBuildingPermitData() {
     return this.http.get(
-      'http://34.125.177.187:8081/buildingPermits/buildingPermitsData'
+      'http://localhost:8081/buildingPermits/buildingPermitsData'
     );
   }
 }

@@ -9,7 +9,7 @@ export class TaxiZipcodeService {
 
   getTaxiTripsDataByzipcode() {
     return this.http.get(
-      'http://34.125.177.187:8081/taxiTrips/taxiTripsDataByZipcode'
+      'http://localhost:8081/taxiTrips/taxiTripsDataByZipcode'
     );
   }
 }

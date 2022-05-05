@@ -9,13 +9,13 @@ export class NegativeCovidService {
 
   getNegativeLabels() {
     return this.http.get(
-      'http://34.125.177.187:8081/covidTest/negativeCovidTestLabels'
+      'http://localhost:8081/covidTest/negativeCovidTestLabels'
     );
   }
 
   getNegativeData() {
     return this.http.get(
-      'http://34.125.177.187:8081/covidTest/negativeCovidTestData'
+      'http://localhost:8081/covidTest/negativeCovidTestData'
     );
   }
 }
