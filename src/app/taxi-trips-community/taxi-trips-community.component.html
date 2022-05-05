@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row py-4 my-4"></div>
+  <div class="row py-4 my-4"></div>
+  <div class="row py-4 my-4" style="background-color: yellowgreen">
+    <table class="table" style="background-color: red">
+      <thead style="background-color: violet">
+        <tr class="" style="background-color: lightskyblue">
+          <th scope="col" class="text-center">Community Area</th>
+          <th scope="col" class="text-center">Taxi Trips Count</th>
+        </tr>
+      </thead>
+
+      <tbody
+        *ngFor="let data of taxiTripsData"
+        style="background-color: palevioletred"
+      >
+        <tr class="table-info" style="background-color: darkgreen">
+          <td class="text-center" style="background-color: darksalmon">
+            {{ data.communityArea }}
+          </td>
+          <td class="text-center" style="background-color: pink">
+            {{ data.countPerCommunityArea }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,14 +1,14 @@
-a {
-  text-decoration: none;
-  color: white;
-}
-
-a:hover,
-a:active {
-  color: lightgray;
-}
 .navigation-items {
   list-style: none;
-  margin: 0px;
-  padding: 0px;
+  margin: 2px;
+  padding: 2px;
+}
+
+li {
+  border: solid 1px;
+  padding: 10px;
+}
+
+ul {
+  padding: 10px;
 }

@@ -5,18 +5,37 @@
     </button>
   </div>
   <div>
-    <a routerLink="/">LOGO</a>
+    <button mat-raised-button color="accent" routerLink="#">
+      Chicago Business Intelligence
+    </button>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li><a *ngIf="!isAuth" routerLink="/signup">Signup</a></li>
-      <li><a *ngIf="!isAuth" routerLink="/login">Login</a></li>
-      <li><a *ngIf="isAuth" routerLink="/training">Training</a></li>
-      <li>
-        <a *ngIf="isAuth" style="cursor: 'pointer'" (click)="onLogout()"
-          >Logout</a
-        >
-      </li>
+      <button mat-raised-button color="accent" routerLink="positive-covid">
+        +ve cases
+      </button>
+      <button mat-raised-button color="accent" routerLink="negative-covid">
+        -ve cases
+      </button>
+      <button mat-raised-button color="accent" routerLink="total-covid">
+        Total cases
+      </button>
+      <button mat-raised-button color="accent" routerLink="building-permits">
+        Building Permits
+      </button>
+      <button mat-raised-button color="accent" routerLink="unemployment-rates">
+        Unemployment Rates
+      </button>
+      <button mat-raised-button color="accent" routerLink="zipcode-taxi-trips">
+        Taxi Trips per Zip Code
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        routerLink="community-taxi-trips"
+      >
+        Taxi Trips per Community
+      </button>
     </ul>
   </div>
 </mat-toolbar>
